@@ -134,11 +134,42 @@
 
 @layer base {
   * {
-    border-color: var(--color-border);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+      "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #121212;
+    color: #ffffff;
+    min-height: 100vh;
+  }
+
+  a {
+    color: #00c1ff;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
   }
 }
