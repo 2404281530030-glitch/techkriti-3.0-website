@@ -12,7 +12,7 @@ import {
 } from 'react-icons/fa';
 
 function EventDetailPage() {
-  const { eventSlug } = useParams();
+  const { eventSlug } = useParams({ strict: false });
   const event = eventData.find(e => e.slug === eventSlug);
 
   // --- STYLES ---
