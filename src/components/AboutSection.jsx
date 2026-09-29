@@ -33,13 +33,21 @@ function AboutSection() {
     <div style={sectionStyle}>
       <Slide direction="up" triggerOnce>
         <div style={futuristicBoxStyle}>
-          <h1 style={{ color: '#00c1ff' }}>About Techकृति 2.O</h1>
+          <h1 style={{ color: '#00c1ff' }}>About Techकृति 3.0</h1>
           <p style={pStyle}>
-            Techकृति is not just a fest—it's a movement, where brilliant minds collide, ideas ignite, and the impossible becomes reality.<p></p>
-The name "Techkriti" is a fusion of "Tech" (Technology) and "Kriti" (a Sanskrit word meaning creation or masterpiece). It symbolizes the art of technological creation, where innovation, intelligence, and creativity come together to shape the future.<p></p>
-Techkriti represents a platform for thinkers, creators, and tech enthusiasts to showcase their brilliance, push the limits of technology, and bring groundbreaking ideas to life. It's more than a fest—it's a celebration of technological excellence and visionary innovation!<p></p>
-💡 Techkriti – Where Ideas Evolve, and the Future Begins! 🚀
+            Techकृति is not just a fest—it's a movement, where brilliant minds collide, ideas ignite, and the impossible becomes reality.
           </p>
+          <p style={pStyle}>
+            The name "Techkriti" is a fusion of "Tech" (Technology) and "Kriti" (a Sanskrit word meaning creation or
+            masterpiece). It symbolizes the art of technological creation, where innovation, intelligence, and creativity
+            come together to shape the future.
+          </p>
+          <p style={pStyle}>
+            Techkriti represents a platform for thinkers, creators, and tech enthusiasts to showcase their brilliance,
+            push the limits of technology, and bring groundbreaking ideas to life. It's more than a fest—it's a
+            celebration of technological excellence and visionary innovation!
+          </p>
+          <p style={pStyle}>💡 Techkriti – Where Ideas Evolve, and the Future Begins! 🚀</p>
         </div>
       </Slide>
     </div>
