@@ -14,16 +14,265 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      event_registrations: {
+        Row: {
+          created_at: string
+          event_slug: string
+          id: string
+          team_id: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_slug: string
+          id?: string
+          team_id?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          event_slug?: string
+          id?: string
+          team_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_registrations_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      participants: {
+        Row: {
+          amount_paid: number
+          branch: string
+          college: string
+          created_at: string
+          email: string
+          full_name: string
+          notes: string | null
+          paid_at: string | null
+          participant_code: string
+          payment_status: string
+          phone: string
+          razorpay_order_id: string | null
+          razorpay_payment_id: string | null
+          updated_at: string
+          user_id: string
+          year: string
+        }
+        Insert: {
+          amount_paid?: number
+          branch?: string
+          college?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          notes?: string | null
+          paid_at?: string | null
+          participant_code?: string
+          payment_status?: string
+          phone?: string
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          updated_at?: string
+          user_id: string
+          year?: string
+        }
+        Update: {
+          amount_paid?: number
+          branch?: string
+          college?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          notes?: string | null
+          paid_at?: string | null
+          participant_code?: string
+          payment_status?: string
+          phone?: string
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          updated_at?: string
+          user_id?: string
+          year?: string
+        }
+        Relationships: []
+      }
+      settings: {
+        Row: {
+          announcement: string | null
+          fee_amount: number
+          id: number
+          max_events: number
+          registrations_open: boolean
+          updated_at: string
+        }
+        Insert: {
+          announcement?: string | null
+          fee_amount?: number
+          id?: number
+          max_events?: number
+          registrations_open?: boolean
+          updated_at?: string
+        }
+        Update: {
+          announcement?: string | null
+          fee_amount?: number
+          id?: number
+          max_events?: number
+          registrations_open?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      team_invites: {
+        Row: {
+          created_at: string
+          id: string
+          invitee_id: string
+          status: string
+          team_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          invitee_id: string
+          status?: string
+          team_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          invitee_id?: string
+          status?: string
+          team_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_invites_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teams: {
+        Row: {
+          created_at: string
+          event_slug: string
+          id: string
+          leader_id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          event_slug: string
+          id?: string
+          leader_id: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          event_slug?: string
+          id?: string
+          leader_id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      check_can_join: {
+        Args: { _event: string; _user: string }
+        Returns: undefined
+      }
+      create_team: { Args: { _event: string; _name: string }; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      invite_member: {
+        Args: { _code: string; _max: number; _team: string }
+        Returns: undefined
+      }
+      is_team_member: {
+        Args: { _team: string; _user: string }
+        Returns: boolean
+      }
+      join_event: { Args: { _event: string }; Returns: undefined }
+      leave_event: { Args: { _event: string }; Returns: undefined }
+      lookup_participant: {
+        Args: { _code: string }
+        Returns: {
+          full_name: string
+          participant_code: string
+        }[]
+      }
+      my_invites: {
+        Args: never
+        Returns: {
+          event_slug: string
+          invite_id: string
+          leader_code: string
+          leader_name: string
+          team_name: string
+        }[]
+      }
+      respond_invite: {
+        Args: { _accept: boolean; _invite: string }
+        Returns: undefined
+      }
+      team_roster: {
+        Args: { _team: string }
+        Returns: {
+          full_name: string
+          participant_code: string
+          status: string
+        }[]
+      }
+      update_my_profile: {
+        Args: {
+          _branch: string
+          _college: string
+          _full_name: string
+          _phone: string
+          _year: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +399,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
