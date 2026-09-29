@@ -2,7 +2,7 @@
 import React from 'react';
 import { eventData } from '../data/events.js';
 import EventCard from '../components/EventCard.jsx';
-// import { Fade } from "./Reveal.jsx"; // <-- 1. REMOVE this import
+// import { Fade } from "../components/Reveal.jsx"; // <-- 1. REMOVE this import
 
 function EventsPage() {
   // ... (pageStyle is the same)

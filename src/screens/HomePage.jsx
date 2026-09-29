@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slide } from "./Reveal.jsx";
+import { Slide } from "../components/Reveal.jsx";
 
 import HeroSection from '../components/HeroSection.jsx';
 import CountdownTimer from '../components/CountdownTimer.jsx';
