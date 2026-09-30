@@ -16,6 +16,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ScheduleRouteImport } from './routes/schedule'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
 import { Route as EventsEventSlugRouteImport } from './routes/events.$eventSlug'
@@ -54,6 +55,11 @@ const ScheduleRoute = ScheduleRouteImport.update({
   path: '/schedule',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof GalleryRoute
   '/register': typeof RegisterRoute
   '/schedule': typeof ScheduleRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/events/$eventSlug': typeof EventsEventSlugRoute
   '/events/': typeof EventsIndexRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof GalleryRoute
   '/register': typeof RegisterRoute
   '/schedule': typeof ScheduleRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/events/$eventSlug': typeof EventsEventSlugRoute
   '/events': typeof EventsIndexRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/gallery': typeof GalleryRoute
   '/register': typeof RegisterRoute
   '/schedule': typeof ScheduleRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/events/$eventSlug': typeof EventsEventSlugRoute
   '/events/': typeof EventsIndexRoute
@@ -114,6 +123,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/register'
     | '/schedule'
+    | '/admin'
     | '/dashboard'
     | '/events/$eventSlug'
     | '/events/'
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/register'
     | '/schedule'
+    | '/admin'
     | '/dashboard'
     | '/events/$eventSlug'
     | '/events'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/register'
     | '/schedule'
+    | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/events/$eventSlug'
     | '/events/'
@@ -205,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScheduleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -230,10 +249,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
 }
 

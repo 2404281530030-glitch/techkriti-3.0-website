@@ -1,6 +1,6 @@
 export function downloadCsv(filename: string, rows: Record<string, unknown>[]) {
   if (!rows.length) return;
-  const headers = Object.keys(rows[0]);
+  const headers = Object.keys(rows[0]!);
   const esc = (v: unknown) => {
     let s = v == null ? "" : String(v);
     if (/^[=+\-@]/.test(s)) s = "'" + s; // prevent spreadsheet formula injection
