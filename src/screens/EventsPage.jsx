@@ -1,33 +1,29 @@
-// src/pages/EventsPage.jsx
-import React from 'react';
-import { eventData } from '../data/events.js';
-import EventCard from '../components/EventCard.jsx';
-// import { Fade } from "../components/Reveal.jsx"; // <-- 1. REMOVE this import
+import React, { useState } from 'react';
+import { events3, DEPARTMENTS } from '../data/events3';
+import { EventTile } from '../components/EventTile';
+import { cn } from '../lib/utils';
 
 function EventsPage() {
-  // ... (pageStyle is the same)
-  const pageStyle = {
-    padding: '8rem 2rem 2rem 2rem',
-    textAlign: 'center'
-  };
-
-  const gridStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-    gap: '2rem',
-    marginTop: '2rem'
-  };
-
+  const [dept, setDept] = useState('All');
+  const list = dept === 'All' ? events3 : events3.filter((e) => e.dept === dept);
   return (
-    <div style={pageStyle}>
-      <h1>Events & Workshops</h1>
-      <p>Explore all the technical and non-technical events planned for Techकृति 2.O.</p>
-      
-      <div style={gridStyle}>
-        {eventData.map(event => (
-          // 2. REMOVE the <Fade> wrapper
-          <EventCard key={event.id} event={event} />
+    <div className="mx-auto max-w-7xl px-5 pb-10 pt-32">
+      <p className="section-eyebrow">Techकृति 3.0</p>
+      <h1 className="font-display mt-2 text-4xl font-bold md:text-5xl">Events & Competitions</h1>
+      <p className="mt-3 max-w-2xl text-muted-foreground">
+        Events are open across departments — join any event you like, up to four per participant.
+      </p>
+      <div className="mt-8 flex flex-wrap gap-2">
+        {['All', ...DEPARTMENTS].map((d) => (
+          <button key={d} onClick={() => setDept(d)}
+            className={cn('rounded-full border px-4 py-2 text-sm transition-colors',
+              dept === d ? 'border-primary bg-primary/15 text-primary' : 'text-muted-foreground hover:text-foreground')}>
+            {d}
+          </button>
         ))}
+      </div>
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {list.map((e) => <EventTile key={e.slug} event={e} />)}
       </div>
     </div>
   );
