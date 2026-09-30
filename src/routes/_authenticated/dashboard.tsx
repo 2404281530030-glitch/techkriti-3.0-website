@@ -192,7 +192,7 @@ function ProfileEditor({ me, onDone, compact }: { me: Participant; onDone: () =>
   const [busy, setBusy] = useState(false);
   const save = async () => {
     const p = profileSchema.safeParse(f);
-    if (!p.success) return toast.error(p.error.issues[0].message);
+    if (!p.success) { toast.error(p.error.issues[0]?.message ?? "Invalid input"); return; }
     setBusy(true);
     const { error } = await supabase.rpc("update_my_profile", {
       _full_name: p.data.full_name, _phone: p.data.phone, _college: p.data.college, _branch: p.data.branch, _year: p.data.year,
@@ -277,7 +277,7 @@ function ProfileAndPay({ me, settings, profileDone, onDone }: {
 }
 
 function MyEvent({ reg, team, roster, myId, onChange }: {
-  reg: Reg; team?: Team; roster: Roster[]; myId: string; onChange: () => void;
+  reg: Reg; team?: Team | undefined; roster: Roster[]; myId: string; onChange: () => void;
 }) {
   const ev = eventBySlug(reg.event_slug);
   const [teamName, setTeamName] = useState("");
