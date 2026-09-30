@@ -241,7 +241,7 @@ function EditDialog({ p, onClose, onSaved }: { p: P; onClose: () => void; onSave
       ...(markPaid ? { paid_at: new Date().toISOString() } : {}), updated_at: new Date().toISOString(),
     }).eq("user_id", p.user_id);
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Participant updated");
     onSaved();
   };
@@ -279,7 +279,7 @@ function EditDialog({ p, onClose, onSaved }: { p: P; onClose: () => void; onSave
 }
 
 function EventsTab({ people, regs, teams, onChange }: { people: P[]; regs: R[]; teams: T[]; onChange: () => void }) {
-  const [slug, setSlug] = useState(events3[0].slug);
+  const [slug, setSlug] = useState(events3[0]?.slug ?? "");
   const byId = new Map(people.map((p) => [p.user_id, p]));
   const teamName = new Map(teams.map((t) => [t.id, t.name]));
   const rows = regs.filter((r) => r.event_slug === slug);
@@ -287,7 +287,7 @@ function EventsTab({ people, regs, teams, onChange }: { people: P[]; regs: R[]; 
   const remove = async (r: R) => {
     if (!confirm("Remove this participant from the event?")) return;
     const { error } = await supabase.from("event_registrations").delete().eq("id", r.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Removed");
     onChange();
   };
@@ -351,7 +351,7 @@ function SettingsTab({ s, onChange }: { s: S; onChange: () => void }) {
       fee_amount: f.fee_amount, max_events: f.max_events, registrations_open: f.registrations_open,
       announcement: f.announcement || null, updated_at: new Date().toISOString(),
     }).eq("id", 1);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Settings saved");
     onChange();
   };
