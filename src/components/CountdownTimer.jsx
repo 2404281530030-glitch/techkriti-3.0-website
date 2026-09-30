@@ -23,10 +23,11 @@ function CountdownTimer() {
     return timeLeft;
   };
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     // This timer will update every second
+    setTimeLeft(calculateTimeLeft());
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
