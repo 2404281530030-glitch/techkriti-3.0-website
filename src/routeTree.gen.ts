@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ScheduleRouteImport } from './routes/schedule'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
 import { Route as EventsEventSlugRouteImport } from './routes/events.$eventSlug'
 
@@ -42,6 +43,11 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScheduleRoute = ScheduleRouteImport.update({
+  id: '/schedule',
+  path: '/schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EventsIndexRoute = EventsIndexRouteImport.update({
   id: '/events/',
   path: '/events/',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/register': typeof RegisterRoute
+  '/schedule': typeof ScheduleRoute
   '/events/$eventSlug': typeof EventsEventSlugRoute
   '/events/': typeof EventsIndexRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/register': typeof RegisterRoute
+  '/schedule': typeof ScheduleRoute
   '/events/$eventSlug': typeof EventsEventSlugRoute
   '/events': typeof EventsIndexRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
   '/register': typeof RegisterRoute
+  '/schedule': typeof ScheduleRoute
   '/events/$eventSlug': typeof EventsEventSlugRoute
   '/events/': typeof EventsIndexRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/gallery'
     | '/register'
+    | '/schedule'
     | '/events/$eventSlug'
     | '/events/'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/gallery'
     | '/register'
+    | '/schedule'
     | '/events/$eventSlug'
     | '/events'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/gallery'
     | '/register'
+    | '/schedule'
     | '/events/$eventSlug'
     | '/events/'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
   RegisterRoute: typeof RegisterRoute
+  ScheduleRoute: typeof ScheduleRoute
   EventsEventSlugRoute: typeof EventsEventSlugRoute
   EventsIndexRoute: typeof EventsIndexRoute
 }
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/schedule': {
+      id: '/schedule'
+      path: '/schedule'
+      fullPath: '/schedule'
+      preLoaderRoute: typeof ScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/events/': {
       id: '/events/'
       path: '/events'
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
   RegisterRoute: RegisterRoute,
+  ScheduleRoute: ScheduleRoute,
   EventsEventSlugRoute: EventsEventSlugRoute,
   EventsIndexRoute: EventsIndexRoute,
 }
