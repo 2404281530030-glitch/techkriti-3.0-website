@@ -6,7 +6,7 @@ import CountdownTimer from "@/components/CountdownTimer.jsx";
 
 export function Hero3() {
   return (
-    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden">
+    <section className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pb-20">
       {/* Background video: covers the area without stretching, loops seamlessly */}
       <video
         className="absolute inset-0 h-full w-full object-cover opacity-50"
@@ -25,7 +25,7 @@ export function Hero3() {
       <div className="relative z-10 mx-auto max-w-5xl px-5 pt-24 text-center">
         <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
           className="section-eyebrow">
-          Kashi Institute of Technology · Varanasi
+          Kashi Institute of Technology · Varanasi · 27–28 Nov 2026
         </motion.p>
         <motion.h1
           initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.1 }}
@@ -43,7 +43,7 @@ export function Hero3() {
           <Button asChild variant="hero" size="lg"><Link to="/register">Register now</Link></Button>
           <Button asChild variant="neon" size="lg"><Link to="/events">Explore events</Link></Button>
         </motion.div>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} className="mt-10">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} className="mt-10 w-full">
           <p className="mb-3 text-xs uppercase tracking-[0.3em] text-muted-foreground">Fest begins in</p>
           <CountdownTimer />
         </motion.div>
