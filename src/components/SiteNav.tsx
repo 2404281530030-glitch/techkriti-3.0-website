@@ -1,6 +1,8 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -17,6 +19,15 @@ export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { user, isAdmin } = useAuth();
+  const navigate = useNavigate();
+  const qc = useQueryClient();
+  const signOut = async () => {
+    setOpen(false);
+    await qc.cancelQueries();
+    qc.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  };
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 30);
@@ -54,6 +65,9 @@ export function SiteNav() {
           <Button asChild variant="hero" size="sm" className="rounded-full px-5">
             <Link to={user ? "/dashboard" : "/register"}>{user ? "My Dashboard" : "Register"}</Link>
           </Button>
+          {user && (
+            <Button variant="ghost" size="sm" onClick={signOut} aria-label="Log out"><LogOut className="h-4 w-4" /> Log out</Button>
+          )}
         </div>
         <button className="ml-auto md:hidden" aria-label="Menu" onClick={() => setOpen(!open)}>
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -74,6 +88,9 @@ export function SiteNav() {
               {user ? "My Dashboard" : "Register now"}
             </Link>
           </Button>
+          {user && (
+            <Button variant="outline" className="mt-2 h-12 rounded-full" onClick={signOut}><LogOut className="h-4 w-4" /> Log out</Button>
+          )}
         </div>
       )}
     </header>
