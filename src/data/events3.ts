@@ -103,4 +103,4 @@ export const ceremonies = [
   { day: 2 as const, time: "02:00 PM – 04:00 PM", title: "Closing Ceremony & Prize Distribution", venue: "Main Stage" },
 ];
 
-export const FEST_START = "2025-12-05T09:00:00+05:30";
+export const FEST_START = "2026-11-27T09:00:00+05:30";

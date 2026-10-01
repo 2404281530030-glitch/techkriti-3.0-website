@@ -23,7 +23,7 @@ function HomePage() {
     <div>
       <Hero3 />
 
-      <section className="mx-auto -mt-10 grid max-w-5xl grid-cols-2 gap-3 px-5 md:grid-cols-4">
+      <section className="relative z-10 mx-auto mt-6 grid max-w-5xl grid-cols-2 gap-3 px-5 md:grid-cols-4">
         {stats.map((s) => (
           <div key={s.l} className="glass rounded-2xl p-5 text-center">
             <div className="font-display text-gradient text-3xl font-black">{s.n}</div>
