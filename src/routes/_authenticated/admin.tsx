@@ -348,7 +348,7 @@ function SettingsTab({ s, onChange }: { s: S; onChange: () => void }) {
   const [f, setF] = useState({ ...s, announcement: s.announcement ?? "" });
   const save = async () => {
     const { error } = await supabase.from("settings").update({
-      fee_amount: f.fee_amount, max_events: f.max_events, registrations_open: f.registrations_open,
+      fee_amount: f.fee_amount, team_fee: f.team_fee, gaming_fee: f.gaming_fee, max_events: f.max_events, registrations_open: f.registrations_open,
       announcement: f.announcement || null, updated_at: new Date().toISOString(),
     }).eq("id", 1);
     if (error) { toast.error(error.message); return; }
@@ -362,7 +362,9 @@ function SettingsTab({ s, onChange }: { s: S; onChange: () => void }) {
         <Switch checked={f.registrations_open} onCheckedChange={(v) => setF({ ...f, registrations_open: v })} />
       </div>
       <div className="grid grid-cols-2 gap-4">
-        <div><Label>Registration fee (₹)</Label><Input type="number" min={0} value={f.fee_amount} onChange={(e) => setF({ ...f, fee_amount: Number(e.target.value) || 0 })} /></div>
+        <div><Label>General fee (₹ / person)</Label><Input type="number" min={0} value={f.fee_amount} onChange={(e) => setF({ ...f, fee_amount: Number(e.target.value) || 0 })} /></div>
+        <div><Label>Team event fee (₹ / person)</Label><Input type="number" min={0} value={f.team_fee} onChange={(e) => setF({ ...f, team_fee: Number(e.target.value) || 0 })} /></div>
+        <div><Label>Gaming fee (₹ / team)</Label><Input type="number" min={0} value={f.gaming_fee} onChange={(e) => setF({ ...f, gaming_fee: Number(e.target.value) || 0 })} /></div>
         <div><Label>Max events per person</Label><Input type="number" min={1} value={f.max_events} onChange={(e) => setF({ ...f, max_events: Number(e.target.value) || 1 })} /></div>
       </div>
       <div><Label>Announcement banner</Label><Textarea placeholder="Shown to participants on their dashboard" value={f.announcement} onChange={(e) => setF({ ...f, announcement: e.target.value })} /></div>

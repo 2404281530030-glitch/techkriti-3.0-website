@@ -83,7 +83,7 @@ export const events3: TKEvent[] = [
     team: false, maxTeam: 1, image: "/memory-master.jpeg", day: 2, time: "12:00 PM – 02:00 PM", venue: "Seminar Hall, 3rd floor CRC" },
   { slug: "mobile-gaming", title: "Mobile Gaming – BGMI & Free Fire", dept: "Open / Common", type: "Esports",
     brief: "Competitive mobile gaming for solo or squad participation. Final titles and rules announced by the committee.",
-    team: true, maxTeam: 4, image: "/mobile-gaming.jpeg", day: 2, time: "10:00 AM – 12:00 PM", venue: "Block B" },
+    team: true, maxTeam: 4, prize: "₹3,000 per winning team (BGMI & Free Fire)", image: "/mobile-gaming.jpeg", day: 2, time: "10:00 AM – 12:00 PM", venue: "Block B" },
   { slug: "virtual-escape-room", title: "Virtual Escape Room", dept: "Open / Common", type: "Team Puzzle",
     brief: "Teams solve a sequence of clues, puzzles and challenges inside a digital escape-room setup.",
     team: true, maxTeam: 3, image: "/ver.jpeg", day: 1, time: "02:00 PM – 04:00 PM", venue: "Lab 4 & 5 (Library Building)" },

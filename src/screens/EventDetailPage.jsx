@@ -21,7 +21,8 @@ function EventDetailPage() {
     { icon: Calendar, label: 'Day', value: `Day ${event.day}` },
     { icon: Clock, label: 'Time', value: event.time },
     { icon: MapPin, label: 'Venue', value: event.venue },
-    { icon: Users, label: 'Format', value: event.team ? `Team (up to ${event.maxTeam})` : 'Individual' },
+    { icon: Users, label: 'Format', value: event.team ? `Team (${event.minTeam ? event.minTeam + '–' : 'up to '}${event.maxTeam})` : 'Individual' },
+    ...(event.prize ? [{ icon: Users, label: 'Prize', value: event.prize }] : []),
   ];
 
   return (
