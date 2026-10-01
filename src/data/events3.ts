@@ -11,6 +11,8 @@ export type TKEvent = {
   time: string;
   venue: string;
   flagship?: boolean;
+  minTeam?: number;
+  prize?: string;
 };
 
 export const DEPARTMENTS = [
@@ -26,13 +28,13 @@ export const events3: TKEvent[] = [
   // Flagship
   { slug: "hackathon", title: "24-Hour Hackathon", dept: "Flagship", type: "Team · Interdisciplinary", flagship: true,
     brief: "Interdisciplinary teams work on real-world problem statements and develop a software, hardware, AI, IoT or other technology-based solution for final presentation.",
-    team: true, maxTeam: 4, image: "/hackathon.jpeg", day: 1, time: "12:00 PM (24 hrs)", venue: "EV-4 (Management Building)" },
+    team: true, minTeam: 2, maxTeam: 6, prize: "₹10,000", image: "/hackathon.jpeg", day: 1, time: "12:00 PM (24 hrs)", venue: "EV-4 (Management Building)" },
   { slug: "tech-exhibition", title: "Tech Exhibition", dept: "Flagship", type: "Exhibition", flagship: true,
     brief: "Students display working models, projects, prototypes, IoT systems, software solutions, AI projects and engineering innovations and explain them to judges and visitors.",
-    team: true, maxTeam: 4, image: "/tech-exhibition.jpeg", day: 1, time: "11:00 AM – 01:30 PM", venue: "College Passage" },
+    team: true, minTeam: 4, maxTeam: 5, prize: "₹10,000", image: "/tech-exhibition.jpeg", day: 1, time: "11:00 AM – 01:30 PM", venue: "College Passage" },
   { slug: "startup-expo", title: "Startup Expo", dept: "Flagship", type: "Pitch", flagship: true,
     brief: "Students or teams present innovative ideas, startup concepts or solutions to real-world problems, covering the problem, solution, uniqueness and implementation.",
-    team: true, maxTeam: 4, image: "/startup-expo.png", day: 2, time: "10:00 AM onward", venue: "Main Stage" },
+    team: true, minTeam: 2, maxTeam: 6, prize: "₹10,000", image: "/startup-expo.png", day: 2, time: "10:00 AM onward", venue: "Main Stage" },
 
   // CSE
   { slug: "pseudo-code-war", title: "Pseudo Code War", dept: "CSE / AI & ML / BCA / MCA", type: "Practical",

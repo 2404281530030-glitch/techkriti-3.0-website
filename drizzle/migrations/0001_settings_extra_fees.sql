@@ -1,0 +1,1 @@
+ALTER TABLE public.settings ADD COLUMN IF NOT EXISTS team_fee integer NOT NULL DEFAULT 49, ADD COLUMN IF NOT EXISTS gaming_fee integer NOT NULL DEFAULT 199;
