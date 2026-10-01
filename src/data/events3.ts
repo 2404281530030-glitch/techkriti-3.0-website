@@ -11,6 +11,8 @@ export type TKEvent = {
   time: string;
   venue: string;
   flagship?: boolean;
+  minTeam?: number;
+  prize?: string;
 };
 
 export const DEPARTMENTS = [
@@ -26,13 +28,13 @@ export const events3: TKEvent[] = [
   // Flagship
   { slug: "hackathon", title: "24-Hour Hackathon", dept: "Flagship", type: "Team · Interdisciplinary", flagship: true,
     brief: "Interdisciplinary teams work on real-world problem statements and develop a software, hardware, AI, IoT or other technology-based solution for final presentation.",
-    team: true, maxTeam: 4, image: "/hackathon.jpeg", day: 1, time: "12:00 PM (24 hrs)", venue: "EV-4 (Management Building)" },
+    team: true, minTeam: 2, maxTeam: 6, prize: "₹10,000", image: "/hackathon.jpeg", day: 1, time: "12:00 PM (24 hrs)", venue: "EV-4 (Management Building)" },
   { slug: "tech-exhibition", title: "Tech Exhibition", dept: "Flagship", type: "Exhibition", flagship: true,
     brief: "Students display working models, projects, prototypes, IoT systems, software solutions, AI projects and engineering innovations and explain them to judges and visitors.",
-    team: true, maxTeam: 4, image: "/tech-exhibition.jpeg", day: 1, time: "11:00 AM – 01:30 PM", venue: "College Passage" },
+    team: true, minTeam: 4, maxTeam: 5, prize: "₹10,000", image: "/tech-exhibition.jpeg", day: 1, time: "11:00 AM – 01:30 PM", venue: "College Passage" },
   { slug: "startup-expo", title: "Startup Expo", dept: "Flagship", type: "Pitch", flagship: true,
     brief: "Students or teams present innovative ideas, startup concepts or solutions to real-world problems, covering the problem, solution, uniqueness and implementation.",
-    team: true, maxTeam: 4, image: "/startup-expo.png", day: 2, time: "10:00 AM onward", venue: "Main Stage" },
+    team: true, minTeam: 2, maxTeam: 6, prize: "₹10,000", image: "/startup-expo.png", day: 2, time: "10:00 AM onward", venue: "Main Stage" },
 
   // CSE
   { slug: "pseudo-code-war", title: "Pseudo Code War", dept: "CSE / AI & ML / BCA / MCA", type: "Practical",
@@ -81,7 +83,7 @@ export const events3: TKEvent[] = [
     team: false, maxTeam: 1, image: "/memory-master.jpeg", day: 2, time: "12:00 PM – 02:00 PM", venue: "Seminar Hall, 3rd floor CRC" },
   { slug: "mobile-gaming", title: "Mobile Gaming – BGMI & Free Fire", dept: "Open / Common", type: "Esports",
     brief: "Competitive mobile gaming for solo or squad participation. Final titles and rules announced by the committee.",
-    team: true, maxTeam: 4, image: "/mobile-gaming.jpeg", day: 2, time: "10:00 AM – 12:00 PM", venue: "Block B" },
+    team: true, maxTeam: 4, prize: "₹3,000 per winning team (BGMI & Free Fire)", image: "/mobile-gaming.jpeg", day: 2, time: "10:00 AM – 12:00 PM", venue: "Block B" },
   { slug: "virtual-escape-room", title: "Virtual Escape Room", dept: "Open / Common", type: "Team Puzzle",
     brief: "Teams solve a sequence of clues, puzzles and challenges inside a digital escape-room setup.",
     team: true, maxTeam: 3, image: "/ver.jpeg", day: 1, time: "02:00 PM – 04:00 PM", venue: "Lab 4 & 5 (Library Building)" },

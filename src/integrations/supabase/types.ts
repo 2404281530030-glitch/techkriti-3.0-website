@@ -107,25 +107,31 @@ export type Database = {
         Row: {
           announcement: string | null
           fee_amount: number
+          gaming_fee: number
           id: number
           max_events: number
           registrations_open: boolean
+          team_fee: number
           updated_at: string
         }
         Insert: {
           announcement?: string | null
           fee_amount?: number
+          gaming_fee?: number
           id?: number
           max_events?: number
           registrations_open?: boolean
+          team_fee?: number
           updated_at?: string
         }
         Update: {
           announcement?: string | null
           fee_amount?: number
+          gaming_fee?: number
           id?: number
           max_events?: number
           registrations_open?: boolean
+          team_fee?: number
           updated_at?: string
         }
         Relationships: []

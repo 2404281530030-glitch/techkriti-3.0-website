@@ -26,7 +26,7 @@ export function EventTile({ event }: { event: TKEvent }) {
         <div className="mt-auto flex items-center gap-3 pt-4 text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
             {event.team ? <Users className="h-3.5 w-3.5" /> : <User className="h-3.5 w-3.5" />}
-            {event.team ? `Team up to ${event.maxTeam}` : "Solo"}
+            {event.team ? (event.minTeam ? `Team ${event.minTeam}–${event.maxTeam}` : `Team up to ${event.maxTeam}`) : "Solo"}
           </span>
           <span>· Day {event.day}</span>
         </div>

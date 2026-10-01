@@ -6,6 +6,7 @@ import { LogOut, Menu, X } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/techkriti-logo.png.asset.json";
 
 const links = [
   { to: "/", label: "Home" },
@@ -45,7 +46,7 @@ export function SiteNav() {
     >
       <nav className="mx-auto flex h-20 max-w-7xl items-center gap-6 px-5">
         <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <img src="/logo.png" alt="Techkriti 3.0" className="h-12 w-auto" />
+          <img src={logo.url} alt="Techkriti 3.0" className="h-12 w-12 rounded-full object-contain ring-1 ring-primary/40" />
           <span className="font-display hidden rounded border border-primary/40 px-1.5 py-0.5 text-xs text-primary sm:inline">3.0</span>
         </Link>
         <div className="ml-auto hidden items-center gap-7 md:flex">

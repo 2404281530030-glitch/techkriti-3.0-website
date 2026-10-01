@@ -8,6 +8,13 @@
       "when": 1790706603967,
       "tag": "0000_techkriti_core",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790820726764,
+      "tag": "0001_settings_extra_fees",
+      "breakpoints": true
     }
   ]
 }
