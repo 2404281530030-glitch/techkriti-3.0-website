@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CountdownTimer from "@/components/CountdownTimer.jsx";
+import logo from "@/assets/techkriti-logo.png.asset.json";
 
 export function Hero3() {
   return (
@@ -27,6 +28,11 @@ export function Hero3() {
           className="section-eyebrow">
           Kashi Institute of Technology · Varanasi · 27–28 Nov 2026
         </motion.p>
+        <motion.img
+          src={logo.url} alt="Techkriti 3.0 logo — Innovate, Compete, Create, Connect"
+          initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}
+          className="mx-auto mt-6 h-40 w-40 rounded-full object-contain shadow-[0_0_60px_-10px_var(--color-primary)] ring-1 ring-primary/30 sm:h-56 sm:w-56"
+        />
         <motion.h1
           initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.1 }}
           className="font-display mt-5 text-5xl font-black leading-none sm:text-7xl md:text-8xl"
