@@ -19,7 +19,7 @@ const links = [
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const qc = useQueryClient();
   const signOut = async () => {
@@ -60,9 +60,6 @@ export function SiteNav() {
               {l.label}
             </Link>
           ))}
-          {isAdmin && (
-            <Link to="/admin" className="text-sm text-accent hover:opacity-80">Admin</Link>
-          )}
           <Button asChild variant="hero" size="sm" className="rounded-full px-5">
             <Link to={user ? "/dashboard" : "/register"}>{user ? "My Dashboard" : "Register"}</Link>
           </Button>
@@ -81,9 +78,6 @@ export function SiteNav() {
               {l.label}
             </Link>
           ))}
-          {isAdmin && (
-            <Link to="/admin" onClick={() => setOpen(false)} className="rounded-lg px-3 py-3 text-lg text-accent">Admin</Link>
-          )}
           <Button asChild variant="hero" className="mt-3 h-12 rounded-full">
             <Link to={user ? "/dashboard" : "/register"} onClick={() => setOpen(false)}>
               {user ? "My Dashboard" : "Register now"}

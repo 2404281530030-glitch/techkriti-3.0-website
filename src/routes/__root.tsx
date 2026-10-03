@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Toaster } from "@/components/ui/sonner";
+import { useRouterState } from "@tanstack/react-router";
 import ParticleBackground from "../components/ParticleBackground.jsx";
 
 function NotFoundComponent() {
@@ -123,16 +124,17 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const isAdmin = useRouterState({ select: (s) => s.location.pathname.startsWith("/admin") });
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ParticleBackground />
+      {!isAdmin && <ParticleBackground />}
       <div style={{ position: "relative", zIndex: 1 }}>
-        <SiteNav />
+        {!isAdmin && <SiteNav />}
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
       </div>
-        <SiteFooter />
+      {!isAdmin && <SiteFooter />}
       <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
