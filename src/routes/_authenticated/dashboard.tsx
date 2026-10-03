@@ -227,7 +227,24 @@ function ProfileAndPay({ me, settings, profileDone, onDone }: {
 }) {
   const createOrder = useServerFn(createFeeOrder);
   const verify = useServerFn(verifyFeePayment);
+  const sync = useServerFn(syncFeePayment);
   const [busy, setBusy] = useState(false);
+  const [checking, setChecking] = useState(false);
+
+  const checkStatus = async (silent = false) => {
+    setChecking(true);
+    try {
+      const r = await sync();
+      if (r.paid) { toast.success("Payment confirmed!"); onDone(); }
+      else if (!silent) toast.info("No completed payment found yet.");
+    } catch (e) { if (!silent) toast.error(e instanceof Error ? e.message : "Could not check status"); }
+    finally { setChecking(false); }
+  };
+
+  useEffect(() => {
+    if (me.razorpay_order_id && me.payment_status !== "paid") checkStatus(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const pay = async () => {
     setBusy(true);
@@ -235,22 +252,26 @@ function ProfileAndPay({ me, settings, profileDone, onDone }: {
       const ok = await loadRazorpay();
       if (!ok) throw new Error("Could not load Razorpay. Check your connection.");
       const o = await createOrder();
-      const RZ = (window as unknown as { Razorpay: new (opts: unknown) => { open: () => void; on: (e: string, cb: () => void) => void } }).Razorpay;
+      const RZ = (window as unknown as { Razorpay: new (opts: unknown) => { open: () => void; on: (e: string, cb: (r: { error?: { description?: string } }) => void) => void } }).Razorpay;
       const rz = new RZ({
         key: o.keyId, amount: o.amount, currency: "INR", order_id: o.orderId,
         name: "Techkriti 3.0", description: "Registration fee",
         prefill: { name: o.name, email: o.email, contact: o.phone },
         theme: { color: "#22b8f0" },
+        retry: { enabled: true },
         handler: async (resp: { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }) => {
           try {
             await verify({ data: resp });
             toast.success("Payment successful! You can now pick your events.");
             onDone();
-          } catch (e) { toast.error(e instanceof Error ? e.message : "Verification failed"); }
+          } catch (e) {
+            toast.error(e instanceof Error ? e.message : "Verification failed");
+            await checkStatus(true);
+          } finally { setBusy(false); }
         },
         modal: { ondismiss: () => setBusy(false) },
       });
-      rz.on("payment.failed", () => toast.error("Payment failed. Please try again."));
+      rz.on("payment.failed", (r) => toast.error(r?.error?.description ?? "Payment failed. Please try again."));
       rz.open();
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Payment could not start");
@@ -266,9 +287,17 @@ function ProfileAndPay({ me, settings, profileDone, onDone }: {
         <p className="mt-2 text-muted-foreground">
           ₹{settings.fee_amount} — one-time fee, covers up to 4 events. Pay via UPI, card or netbanking.
         </p>
-        <Button variant="hero" size="lg" className="mt-5" disabled={!profileDone || busy || !settings.registrations_open} onClick={pay}>
-          {busy ? "Opening payment…" : `Pay ₹${settings.fee_amount}`}
-        </Button>
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <Button variant="hero" size="lg" disabled={!profileDone || busy || !settings.registrations_open} onClick={pay}>
+            {busy ? "Processing…" : `Pay ₹${settings.fee_amount}`}
+          </Button>
+          {me.razorpay_order_id && (
+            <Button variant="outline" disabled={checking} onClick={() => checkStatus(false)}>
+              {checking ? "Checking…" : "Already paid? Refresh status"}
+            </Button>
+          )}
+        </div>
+        <p className="mt-3 text-xs text-muted-foreground">Secured by Razorpay. If money was deducted but status didn't update, tap "Refresh status".</p>
         {!profileDone && <p className="mt-2 text-xs text-muted-foreground">Save your details first.</p>}
         {!settings.registrations_open && <p className="mt-2 text-xs text-warning">Registrations are closed.</p>}
       </div>
