@@ -49,6 +49,32 @@ export const createFeeOrder = createServerFn({ method: "POST" })
     return { orderId: order.id, amount: order.amount, keyId: id, name: me.full_name, email: me.email, phone: me.phone };
   });
 
+type RzPayment = { id: string; status: string; amount: number; order_id: string };
+
+async function rzGet<T>(path: string): Promise<T> {
+  const { id, secret } = keys();
+  const res = await fetch(`https://api.razorpay.com/v1${path}`, {
+    headers: { Authorization: "Basic " + Buffer.from(`${id}:${secret}`).toString("base64") },
+  });
+  if (!res.ok) {
+    console.error(`Razorpay GET ${path} failed [${res.status}]: ${await res.text()}`);
+    throw new Error("Could not reach payment gateway. Please try again.");
+  }
+  return (await res.json()) as T;
+}
+
+async function markPaid(userId: string, p: RzPayment) {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { error } = await supabaseAdmin.from("participants").update({
+    payment_status: "paid",
+    razorpay_payment_id: p.id,
+    amount_paid: Math.round(p.amount / 100),
+    paid_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  }).eq("user_id", userId);
+  if (error) throw new Error("Could not record payment");
+}
+
 export const verifyFeePayment = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d) =>
@@ -69,14 +95,24 @@ export const verifyFeePayment = createServerFn({ method: "POST" })
       .from("participants").select("razorpay_order_id").eq("user_id", context.userId).single();
     if (me?.razorpay_order_id !== data.razorpay_order_id) throw new Error("Order mismatch");
 
-    const { data: settings } = await context.supabase.from("settings").select("fee_amount").eq("id", 1).single();
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { error } = await supabaseAdmin.from("participants").update({
-      payment_status: "paid",
-      razorpay_payment_id: data.razorpay_payment_id,
-      amount_paid: settings?.fee_amount ?? 0,
-      paid_at: new Date().toISOString(),
-    }).eq("user_id", context.userId);
-    if (error) throw new Error("Could not record payment");
+    const p = await rzGet<RzPayment>(`/payments/${encodeURIComponent(data.razorpay_payment_id)}`);
+    if (p.order_id !== data.razorpay_order_id || !["captured", "authorized"].includes(p.status))
+      throw new Error("Payment not completed yet");
+    await markPaid(context.userId, p);
     return { ok: true };
+  });
+
+// Recovers payments where the browser closed before verification finished.
+export const syncFeePayment = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data: me } = await context.supabase
+      .from("participants").select("razorpay_order_id, payment_status").eq("user_id", context.userId).single();
+    if (me?.payment_status === "paid") return { paid: true };
+    if (!me?.razorpay_order_id) return { paid: false };
+    const list = await rzGet<{ items: RzPayment[] }>(`/orders/${encodeURIComponent(me.razorpay_order_id)}/payments`);
+    const ok = list.items.find((p) => p.status === "captured" || p.status === "authorized");
+    if (!ok) return { paid: false };
+    await markPaid(context.userId, ok);
+    return { paid: true };
   });
